@@ -50,7 +50,7 @@ const HotelSchema = new mongoose.Schema(
       required: false,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 export default mongoose.model("Hotel", HotelSchema);
