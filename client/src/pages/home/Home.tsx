@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <div>
             <Navbar />
-            <Header />
+            <Header type="home"/>
 
             <div className="homeContainer">
                 <Featured />
