@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Featured from '../../components/featured/Featured'
 import FeaturedProperties from '../../components/featuredProperties/FeaturedProperties'
 import Footer from '../../components/footer/Footer'
@@ -8,10 +9,12 @@ import PropertyList from '../../components/propertyList/PropertyList'
 import './home.css'
 
 const Home = () => {
+    const [home, setListMode] = useState('home')
     return (
         <div>
             <Navbar />
-            <Header type="home"/>
+            <Header type={home}/>
+            {/* <Header type='home'/> */}
 
             <div className="homeContainer">
                 <Featured />
