@@ -2,7 +2,9 @@ import { format } from "date-fns";
 import React, { useState } from "react";
 import { DateRange } from "react-date-range";
 import { useLocation } from "react-router-dom";
+import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
+import MailList from "../../components/mailList/MailList";
 import Navbar from "../../components/navbar/Navbar";
 import SearchItem from "../../components/searchItem/SearchItem";
 import "./list.css";
@@ -19,7 +21,7 @@ const List = () => {
   const [openDate, setOpenDate] = useState(false);
 
   return (
-    <div>
+    <div className="hotelsContainer">
       <Navbar />
       <Header type="list" />
 
@@ -55,14 +57,14 @@ const List = () => {
                   <span className="searchOptionText">
                     Min price <small>per night</small>
                   </span>
-                  <input type="text" className="searchOptionInput" />
+                  <input type="number" min={0} className="searchOptionInput" />
                 </div>
 
                 <div className="searchOptionItem">
                   <span className="searchOptionText">
                     Max price <small>per night</small>
                   </span>
-                  <input type="text" className="searchOptionInput" />
+                  <input type="number" min={0} className="searchOptionInput" />
                 </div>
 
                 <div className="searchOptionItem">
@@ -98,8 +100,6 @@ const List = () => {
             <button>Search</button>
           </div>
 
-
-
           <div className="listResult">
             <SearchItem />
             <SearchItem />
@@ -113,6 +113,16 @@ const List = () => {
           </div>
         </div>
       </div>
+
+      <MailList />
+      <Footer />
+
+{/* 
+
+      <div className="lfooter">
+        <Footer />
+      </div>
+      <Footer /> */}
     </div>
   );
 };

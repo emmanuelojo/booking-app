@@ -1,3 +1,9 @@
+.hoteldContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
 .listContainer{
     display: flex;
     justify-content: center;
@@ -82,4 +88,15 @@
 
 .listResult{
     flex: 3;
+}
+
+.lfooter{
+    width: 100%;
+    max-width: 1024px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    border: 1px solid red;
 }
