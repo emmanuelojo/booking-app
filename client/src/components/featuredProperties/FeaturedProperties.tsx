@@ -1,54 +1,47 @@
 import React from "react";
+import useFetch from "../../hooks/useFetch";
 import "./featuredProperties.css";
+import { HotelInterface } from "../../types/hotel";
+
 
 const FeaturedProperties = () => {
+  const { data, loading, error } = useFetch(
+    "http://localhost:8000/api/v1/hotels?featured=true&limit=3"
+  );
+
   return (
+
     <div className="fp">
-      <div className="fpItem">
-        <img
-          src="https://media.istockphoto.com/photos/modern-living-room-interior-with-air-conditioner-orange-sofa-and-picture-id1352177016?b=1&k=20&m=1352177016&s=170667a&w=0&h=Mec3QGI01I_jI0sBHHZJEW2LSFhbDZQLMg81PHfBp8A="
-          alt="image"
-          className="fpImg"
-        />
-        <span className="fpName">ApartHotel Miasto</span>
-        <span className="fpCity">Madrid</span>
-        <span className="fpPrice">Starting from $200</span>
+      {loading ? (
+        "loading"
+      ) : (
+        <>
+        {data && data.map((item: HotelInterface, idx: number) => (
+          <div className="fpItem" key={idx}>
+            <img src={item.photos[0]} alt="image" className="fpImg" />
+            <span className="fpName"> {item.name} </span>
+            <span className="fpCity"> {item.city} </span>
+            <span className="fpPrice">
+              Starting from ${item.cheapestPrice}
+            </span>
 
-        <div className="fpRating">
-          <button>8.5</button>
-          <span>Excellent</span>
-        </div>
-      </div>
-      <div className="fpItem">
-        <img
-          src="https://media.istockphoto.com/photos/modern-living-room-interior-with-air-conditioner-orange-sofa-and-picture-id1352177016?b=1&k=20&m=1352177016&s=170667a&w=0&h=Mec3QGI01I_jI0sBHHZJEW2LSFhbDZQLMg81PHfBp8A="
-          alt="image"
-          className="fpImg"
-        />
-        <span className="fpName">ApartHotel Miasto</span>
-        <span className="fpCity">Madrid</span>
-        <span className="fpPrice">Starting from $200</span>
-
-        <div className="fpRating">
-          <button>8.5</button>
-          <span>Excellent</span>
-        </div>
-      </div>
-      <div className="fpItem">
-        <img
-          src="https://media.istockphoto.com/photos/modern-living-room-interior-with-air-conditioner-orange-sofa-and-picture-id1352177016?b=1&k=20&m=1352177016&s=170667a&w=0&h=Mec3QGI01I_jI0sBHHZJEW2LSFhbDZQLMg81PHfBp8A="
-          alt="image"
-          className="fpImg"
-        />
-        <span className="fpName">ApartHotel Miasto</span>
-        <span className="fpCity">Madrid</span>
-        <span className="fpPrice">Starting from $200</span>
-
-        <div className="fpRating">
-          <button>8.5</button>
-          <span>Excellent</span>
-        </div>
-      </div>
+            {item.rating && (
+              <div className="fpRating">
+                <button> {item.rating} </button>
+                <span>
+                  {" "}
+                  {item.rating > 8
+                    ? "Excellent"
+                    : item.rating < 4
+                    ? "Poor"
+                    : "Good"}{" "}
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+      </>
+      )}
     </div>
   );
 };

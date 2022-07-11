@@ -15,9 +15,12 @@ export const register = async (req, res, next) => {
     });
 
     await newUser.save();
+
+    const { password, ...otherDetails } = newUser._doc
+    
     res.status(201).json({
       status: 201,
-      data: { ...newUser._doc },
+      data: { ...otherDetails},
       message: "Success",
     });
   } catch (error) {
@@ -37,7 +40,7 @@ export const login = async (req, res, next) => {
 
       const token = jwt.sign({id:user._id, isAdmin: user.isAdmin }, process.env.JWT)
       
-      const {password, isAdmin, ...otherDetails } = loggedInUser._doc
+      const {password, isAdmin, ...otherDetails } = user._doc
       res.cookie("access_token", token, { httpOnly: true }).status(200).json({
         status: 200,
         data: { ...otherDetails },
