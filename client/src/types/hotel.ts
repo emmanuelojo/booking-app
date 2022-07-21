@@ -13,3 +13,15 @@ export interface HotelInterface {
   cheapestPrice: number;
   featured: boolean;
 };
+
+export interface HeaderProps  {
+  type: string;
+};
+
+export interface DateRangeInterface {
+  startDate: Date | undefined;
+  endDate: Date | undefined;
+  // startDate: Date
+  // endDate: Date
+  key: string;
+};

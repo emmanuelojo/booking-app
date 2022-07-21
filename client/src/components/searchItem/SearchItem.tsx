@@ -3,20 +3,17 @@ import "./searchItem.css";
 import { HotelInterface } from "../../types/hotel";
 import { Link, Route } from "react-router-dom";
 
-
-// const SearchItem: React.FC<HotelInterface>  = (props: HotelInterface) => {
-// const SearchItem = (props: HotelInterface) => {
-// const SearchItem = (item: HotelInterface) => {  
-const SearchItem = ({ item }) => {  
+const SearchItem = ({ item }: { item: HotelInterface }) => {
+  // export const SearchItem: React.FC<HotelInterface> = () => {
   return (
     <div className="searchItemContainer">
-      {item.photos[0] && <img src={item.photos[0]} alt="Image" className="searchItemImg" />}
+      {item.photos[0] && (
+        <img src={item.photos[0]} alt="Image" className="searchItemImg" />
+      )}
 
       <div className="searchItemDesc">
         <h1 className="searchItemTitle"> {item.name} </h1>
-        <span className="searchItemDistance">
-          {item.distance}m from center
-        </span>
+        <span className="searchItemDistance">{item.distance}m from center</span>
         <span className="taxiOpt">Free airport taxi</span>
         <span className="subTitle">Studio Apartment with AC</span>
         <span className="features"> {item.description}</span>

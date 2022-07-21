@@ -1,36 +1,38 @@
-import { useState } from 'react'
-import Featured from '../../components/featured/Featured'
-import FeaturedProperties from '../../components/featuredProperties/FeaturedProperties'
-import Footer from '../../components/footer/Footer'
-import Header from '../../components/header/Header'
-import MailList from '../../components/mailList/MailList'
-import Navbar from '../../components/navbar/Navbar'
-import PropertyList from '../../components/propertyList/PropertyList'
-import './home.css'
+import { useState } from "react";
+import Featured from "../../components/featured/Featured";
+import FeaturedProperties from "../../components/featuredProperties/FeaturedProperties";
+import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
+import MailList from "../../components/mailList/MailList";
+import Navbar from "../../components/navbar/Navbar";
+import PropertyList from "../../components/propertyList/PropertyList";
+import "./home.css";
+import { HeaderProps } from "../../types/hotel";
 
 const Home = () => {
-    const [home, setListMode] = useState('home')
-    return (
-        <div>
-            <Navbar />
-            <Header type={home}/>
-            {/* <Header type='home'/> */}
+  const [home, setListMode] = useState({
+    type: "home",
+  });
 
-            <div className="homeContainer">
-                <Featured />
-                <h1 className="homeTitle"> Browse by property type</h1>
+  return (
+    <div>
+      <Navbar />
+      <Header type={home} />
 
-                <PropertyList />
+      <div className="homeContainer">
+        <Featured />
+        <h1 className="homeTitle"> Browse by property type</h1>
 
-                <h1 className="homeTitle"> Home guests love</h1>
+        <PropertyList />
 
-                <FeaturedProperties />
-                <MailList />
-                <Footer />
-            </div>
-        </div>
-    )
-}
+        <h1 className="homeTitle"> Home guests love</h1>
 
+        <FeaturedProperties />
+        <MailList />
+        <Footer />
+      </div>
+    </div>
+  );
+};
 
-export default Home
+export default Home;

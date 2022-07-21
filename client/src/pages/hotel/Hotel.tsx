@@ -23,9 +23,15 @@ const Hotel = () => {
 
   const [openSlider, setOpenSlider] = useState(false);
 
+  const [list, setListMode] = useState({
+    type: "list",
+  });
+
   const { data, loading, error, reFetch } = useFetch(
     `http://localhost:8000/api/v1/hotels/find/${id}`
   );
+
+  console.log("hotel: ", data.data)
 
   // const photos = [
   //   {
@@ -74,12 +80,12 @@ const Hotel = () => {
   return (
     <div className="hotel">
       <Navbar />
-      <Header type="list" />
+      <Header type={list} />
 
       {loading ? (
         "loading..."
       ) : (
-        <div className="hotelContainer">
+        data.data && <div className="hotelContainer">
           {openSlider && (
             <div className="slider">
               <p>{slideNumber}</p>
@@ -95,7 +101,7 @@ const Hotel = () => {
               />
               <div className="sliderWrapper">
                 <img
-                  src={data.photos[slideNumber]}
+                  src={data.data.photos[slideNumber]}
                   alt="image"
                   className="sliderImg"
                 />
@@ -110,22 +116,68 @@ const Hotel = () => {
 
           <div className="hotelWrapper">
             <button className="bookNow">Reserve or Book Now</button>
-            <h1 className="hotelTitle"> {data.name} </h1>
+            <h1 className="hotelTitle"> {data.data.name} </h1>
 
             <div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
-              <span>{data.address} </span>
+              <span>{data.data.address} </span>
             </div>
             <span className="hotelDistance">
-              Excellent location - {data.distance}m from center
+              Excellent location - {data.data.distance}m from center
             </span>
             <span className="priceHighlight">
-              Book a stay over ${data.cheapestPrice}at this property and get a free airport taxi
+              Book a stay over ${data.data.cheapestPrice} at this property and get a free airport taxi
             </span>
 
             <div className="hotelImages">
-              {data.photos && data.photos.map((photo:string, idx:number) => (
-                <div className="hotelImgWrapper">
+              {data.data.photos && data.data.photos.map((photo:string, idx:number) => (
+                <div className="hotelImgWrapper" key={idx}>
+                  <img
+                    onClick={() => handleOpen(idx)}
+                    src={photo}
+                    alt="Image"
+                    className="hotelImg"
+                  />
+                </div>
+              ))}{data.data.photos && data.data.photos.map((photo:string, idx:number) => (
+                <div className="hotelImgWrapper" key={idx}>
+                  <img
+                    onClick={() => handleOpen(idx)}
+                    src={photo}
+                    alt="Image"
+                    className="hotelImg"
+                  />
+                </div>
+              ))}{data.data.photos && data.data.photos.map((photo:string, idx:number) => (
+                <div className="hotelImgWrapper" key={idx}>
+                  <img
+                    onClick={() => handleOpen(idx)}
+                    src={photo}
+                    alt="Image"
+                    className="hotelImg"
+                  />
+                </div>
+              ))}{data.data.photos && data.data.photos.map((photo:string, idx:number) => (
+                <div className="hotelImgWrapper" key={idx}>
+                  <img
+                    onClick={() => handleOpen(idx)}
+                    src={photo}
+                    alt="Image"
+                    className="hotelImg"
+                  />
+                </div>
+              ))}{data.data.photos && data.data.photos.map((photo:string, idx:number) => (
+                <div className="hotelImgWrapper" key={idx}>
+                  <img
+                    onClick={() => handleOpen(idx)}
+                    src={photo}
+                    alt="Image"
+                    className="hotelImg"
+                  />
+                </div>
+              ))}
+              {data.data.photos && data.data.photos.map((photo:string, idx:number) => (
+                <div className="hotelImgWrapper" key={idx}>
                   <img
                     onClick={() => handleOpen(idx)}
                     src={photo}
@@ -138,9 +190,15 @@ const Hotel = () => {
 
             <div className="hotelDetails">
               <div className="hotelDetailsTexts">
-                <h1 className="hotelTitle"> {data.title} </h1>
+                <h1 className="hotelTitle"> {data.data.title} </h1>
                 <p className="hotelDesc">
-                {data.description } 
+                {data.data.description } 
+                </p>
+                <p className="hotelDesc">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, nulla? Nulla facilis voluptates cum, voluptatum distinctio deleniti laborum voluptate deserunt nostrum alias ipsum mollitia? Omnis facere labore praesentium sequi at?
+                </p>
+                <p className="hotelDesc">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, nulla? Nulla facilis voluptates cum, voluptatum distinctio deleniti laborum voluptate deserunt nostrum alias ipsum mollitia? Omnis facere labore praesentium sequi at?
                 </p>
               </div>
 

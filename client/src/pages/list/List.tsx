@@ -11,33 +11,35 @@ import useFetch from "../../hooks/useFetch";
 import "./list.css";
 import { HotelInterface } from "../../types/hotel";
 
-type LocationProp = {
+interface LocationProp {
   hash: string;
   key: string;
   pathname: string;
   search: string;
-  state: {
-    date: [
-      {
-        startDate: Date | undefined;
-        endDate: Date | undefined;
-        key: string;
-      }
-    ];
-    destination: string;
-    options: {
-      adults: number;
-      children: number;
-      rooms: number;
-    };
-  };
-};
+  state: any;
+  // state: {
+  //   date: [
+  //     {
+  //       startDate: Date | undefined;
+  //       endDate: Date | undefined;
+  //       key: string;
+  //     }
+  //   ];
+  //   destination: string;
+  //   options: {
+  //     adults: number;
+  //     children: number;
+  //     rooms: number;
+  //   };
+  // };
+}
 
 const List = () => {
-  const location = useLocation();
+  const location: LocationProp = useLocation();
+  console.log("type of location: ", typeof location);
   console.log("location: ", location);
 
-  location.state as LocationProp;
+  // location.state as LocationProp;
 
   // const place = location.state
 
@@ -71,12 +73,18 @@ const List = () => {
 
   const [openDate, setOpenDate] = useState(false);
 
-  const [min, setMin] = useState(undefined);
+  const [min, setMin] = useState("");
 
-  const [max, setMax] = useState(undefined);
+  const [max, setMax] = useState("");
+
+  const [list, setListMode] = useState({
+    type: "list",
+  });
 
   const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:8000/api/v1/hotels?city=${destination}&min=${min || 0}&max=${max || 9999}`
+    `http://localhost:8000/api/v1/hotels?city=${destination}&min=${
+      min || 0
+    }&max=${max || 9999}`
   );
 
   // if (location.state !== null) {
@@ -88,13 +96,13 @@ const List = () => {
   // }
 
   const handleClick = () => {
-    reFetch()
-  }
+    reFetch();
+  };
 
   return (
     <div className="hotelsContainer">
       <Navbar />
-      <Header type="list" />
+      <Header type={list} />
 
       <div className="listContainer">
         <div className="listWrapper">
@@ -106,12 +114,15 @@ const List = () => {
                 type="text"
                 placeholder="Destination"
                 defaultValue={destination}
-                onChange={e => setDestination(e.target.value)} 
+                onChange={(e) => setDestination(e.target.value)}
               />
             </div>
             <div className="searchItem">
               <label>Check-in Date</label>
-              <span onClick={() => setOpenDate(!openDate)} style={{ fontSize: 12,}}>
+              <span
+                onClick={() => setOpenDate(!openDate)}
+                style={{ fontSize: 12 }}
+              >
                 {`${format(date[0].startDate, "dd-MM-yyyy")} to ${format(
                   date[0].endDate,
                   "dd-MM-yyyy"
@@ -133,14 +144,24 @@ const List = () => {
                   <span className="searchOptionText">
                     Min price <small>per night</small>
                   </span>
-                  <input type="number" min={1}  onChange={e => setMin(e.target.value)} className="searchOptionInput" />
+                  <input
+                    type="number"
+                    min={1}
+                    onChange={(e) => setMin(e.target.value)}
+                    className="searchOptionInput"
+                  />
                 </div>
 
                 <div className="searchOptionItem">
                   <span className="searchOptionText">
                     Max price <small>per night</small>
                   </span>
-                  <input type="number" min={1} onChange={e => setMax(e.target.value)}  className="searchOptionInput" />
+                  <input
+                    type="number"
+                    min={1}
+                    onChange={(e) => setMax(e.target.value)}
+                    className="searchOptionInput"
+                  />
                 </div>
 
                 <div className="searchOptionItem">
@@ -173,7 +194,7 @@ const List = () => {
               </div>
             </div>
 
-            <button onClick={handleClick} >Search</button>
+            <button onClick={handleClick}>Search</button>
           </div>
 
           <div className="listResult">
@@ -182,9 +203,9 @@ const List = () => {
             ) : (
               <>
                 {" "}
-                {data &&
-                  data.map((item: HotelInterface) => (
-                    <SearchItem item={item} key={item._id}/>
+                {data.data &&
+                  data.data.map((item: HotelInterface) => (
+                    <SearchItem item={item} key={item._id} />
                   ))}
               </>
             )}

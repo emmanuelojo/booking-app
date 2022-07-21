@@ -13,17 +13,18 @@ import "./header.css";
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { HeaderProps, DateRangeInterface } from "../../types/hotel";
 
-type HeaderProps = {
-  type: string;
-};
-type DateRangeInterface = {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
-  key: string;
-};
+// type HeaderProps = {
+//   type: string;
+// };
+// type DateRangeInterface = {
+//   startDate: Date | undefined;
+//   endDate: Date | undefined;
+//   key: string;
+// };
 
-const Header: React.FC<HeaderProps> = ({ type }) => {
+const Header = ({ type }: { type: HeaderProps }) => {
   const [destination, setDestination] = useState("");
 
   const [openDate, setOpenDate] = useState(false);
@@ -32,8 +33,18 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   //   { startDate: new Date(), endDate: new Date(), key: "selection" },
   // ]);
 
+  // WORKING BELOW
+
+  // const [date, setDate] = useState([
+  //   { startDate: new Date(), endDate: new Date(), key: "selection" },
+  // ]);
+
   const [date, setDate] = useState([
-    { startDate: new Date(), endDate: new Date(), key: "selection" },
+    {
+      startDate: new Date() || undefined,
+      endDate: new Date() || undefined,
+      key: "selection",
+    },
   ]);
 
   const [selectionRange, setRange] = useState([
@@ -57,12 +68,55 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     //   ...prev, [name]: operation === 'i' ? options[name] + 1 : options[name] - 1
     // }})
     // if(name === 'adults') operation === 'i' ? setOptions(options.adults +1)
-    setOptions((prev) => {
-      return {
-        ...prev,
-        [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
-      };
-    });
+
+    // WORKING BELOW
+
+    // setOptions((prev) => {
+    //   return {
+    //     ...prev,
+    //     // [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
+    //     [name]: operation === "i" ? options.name + 1 : options.name - 1,
+    //   };
+    // });
+
+    if (name === "adults")
+      operation === "i"
+        ? setOptions({
+            adults: options.adults + 1,
+            children: options.children,
+            rooms: options.rooms,
+          })
+        : setOptions({
+            adults: options.adults - 1,
+            children: options.children,
+            rooms: options.rooms,
+          });
+
+    if (name === "children")
+      operation === "i"
+        ? setOptions({
+            adults: options.adults,
+            children: options.children + 1,
+            rooms: options.rooms,
+          })
+        : setOptions({
+            adults: options.adults,
+            children: options.children - 1,
+            rooms: options.rooms,
+          });
+
+    if (name === "rooms")
+      operation === "i"
+        ? setOptions({
+            adults: options.adults,
+            children: options.children,
+            rooms: options.rooms + 1,
+          })
+        : setOptions({
+            adults: options.adults,
+            children: options.children,
+            rooms: options.rooms - 1,
+          });
   };
 
   const navigate = useNavigate();
@@ -75,7 +129,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     <div className="header">
       <div
         className={
-          type === "list" ? "headerContainer listMode" : "headerContainer"
+          type.type === "list" ? "headerContainer listMode" : "headerContainer"
         }
       >
         <div className="headerList">
@@ -105,7 +159,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
           </div>
         </div>
 
-        {type !== "list" && (
+        {type.type !== "list" && (
           <>
             {" "}
             <h1 className="headerTitle">

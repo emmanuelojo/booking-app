@@ -16,7 +16,7 @@ const FeaturedProperties = () => {
         "loading"
       ) : (
         <>
-        {data && data.map((item: HotelInterface, idx: number) => (
+        {data.data && data.data.map((item: HotelInterface, idx: number) => (
           <div className="fpItem" key={idx}>
             <img src={item.photos[0]} alt="image" className="fpImg" />
             <span className="fpName"> {item.name} </span>
